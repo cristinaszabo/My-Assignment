@@ -1,0 +1,86 @@
+
+@using DojoActivity.Models
+@using Microsoft.AspNetCore.Http;
+@model List<Activity>
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row">
+  <div class="col-8">
+    <h3><i>Welcome <span style="color:rgb(218, 68, 180)"> @ViewBag.LoggedInUser.FirstName </span> to Dojo Activity Center!</i></h3>
+  </div>
+  <div class="col-4">
+    <a href="/">Logout</a>
+  </div>
+</div>
+<hr>
+<br>
+
+<div class="row">
+    <div clas="col">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Activity</th>
+                    <th scope="col">Date and Time</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">Coordinator</th>
+                    <th scope="col">Participants</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int? LoggedInUser = @Context.Session.GetInt32 ("UserId");
+                    foreach( var act in Model )
+                    {
+                        if ( DateTime.Now < act.StartDate )
+                        {
+                            <tr>
+                                <td><a href="/activity/@act.ActivityId">@act.ActivityTitle</a></td>
+                                <td>@act.StartDate</td>
+                                <td>@act.Duration @act.TimeMeasure</td>
+                                <td>@act.Coordinator.FirstName @act.Coordinator.LastName</td>
+                                <td>@act.Participations.Count</td>
+                                @{
+                                    if( act.CoordinatorId == LoggedInUser )
+                                    {
+                                        <td><a href="/delete/@act.ActivityId"><span style="color:red">DELETE</span></a></td>
+                                    }
+                                    else 
+                                    {
+                                        bool attending = false;
+                                        foreach (var part in act.Participations)
+                                        {
+                                            if(part.User.UserId == (int)LoggedInUser)
+                                            {
+                                                attending = true;
+                                            }
+                                        }
+                                        if (attending)
+                                        {
+                                            <td><a href="/leave/@act.ActivityId"><span style="color:orange">LEAVE</span></a></td>
+                                        }
+                                        else
+                                        {
+                                            <td><a href="/join/@act.ActivityId"><span style="color:green">JOIN</span></a></td>
+                                        }
+                                    }
+                                }
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-8"></div>
+  <div class="col-4">
+    <a href="newactivity" class="btn btn-info"> Add New Activity</a>
+  </div>
+</div>

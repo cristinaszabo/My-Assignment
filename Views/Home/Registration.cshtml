@@ -1,0 +1,41 @@
+﻿@using DojoActivity.Models
+@model User
+
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<h5>Don't have an account? <span style="color:blue"><i>Register:</span></i></h5>
+<hr>
+<form asp-action="Registration" asp-controller="Home" method="POST">
+    <div class="form-row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="FirstName" for="name"><span><b>First Name</b></span></label>
+            <input asp-for="FirstName" class="form-control" id="name" placeholder="your name">
+            <span asp-validation-for="FirstName" style="font-size:small;color:red;"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="LastName" for="name"><span><b>Last Name</b></span></label>
+            <input asp-for="LastName" class="form-control" id="name" placeholder="your name">
+            <span asp-validation-for="LastName" style="font-size:small;color:red;"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" for="validEmail"><span><b>Email address</b></span></label>
+        <input asp-for="Email" class="form-control" id="validEmail" aria-describedby="emailHelp" placeholder="enter email" >
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <span asp-validation-for="Email" style="font-size:small;color:red;"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password" for="validPassword"><span><b>Password</b></span></label>
+        <input asp-for="Password" class="form-control" id="validPassword" placeholder="password">
+        <span asp-validation-for="Password" style="font-size:small;color:red;"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Confirm" for="validPassword"><span><b>Confirm Password</b></span></label>
+        <input asp-for="Confirm" class="form-control" id="validPassword" placeholder="password">
+        <span asp-validation-for="Confirm" style="font-size:small;color:red;"></span>
+    </div>
+    <button class="btn btn-primary" type="submit">Register</button>
+</form>
+

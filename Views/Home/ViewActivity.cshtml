@@ -1,0 +1,75 @@
+@using DojoActivity.Models 
+@using Microsoft.AspNetCore.Http; 
+@model Activity
+
+<div class="row">
+  <div class="col-8">
+    <h2>Dojo Activity Center</h2>
+  </div>
+  <div class="col-2">
+    <a href="/dashboard">Home</a>
+  </div>
+  <div class="col-2">
+    <a href="/">Logout</a>
+  </div>
+</div>
+<hr />
+<hr />
+
+<h2><span style="color:orangered">@Model.ActivityTitle</span></h2>
+<hr />
+
+<div class="row">
+  <div class="col-6">
+    <h4>Event Coordinator: @Model.Coordinator.FirstName @Model.Coordinator.LastName</h4>
+    <br />
+    <h4>Date: <i>@Model.StartDate.ToString("dddd, MMMM dd yyyy hh:mm tt")</i></h4>
+    <br />
+    <h4>Description:</h4>
+    <p>@Model.Description</p>
+    <br />
+  </div>
+
+  <div class="col-2"></div>
+  <div class="col-4">
+    <h4>Participants: @Model.Participations.Count</h4>
+    <hr />
+    @foreach ( var p in Model.Participations ) 
+    {
+    <p><span>@p.User.FirstName @p.User.LastName</span></p>
+    }
+  </div>
+</div>
+<hr />
+
+<div class="row">
+  <div class="col-6">
+    @{
+        int? LoggedInUser = @Context.Session.GetInt32 ("UserId"); 
+    } 
+    @if ( Model.CoordinatorId == LoggedInUser ) 
+    {
+        <a href="/delete/@Model.ActivityId"><span style="color:red">DELETE</span></a>
+    } 
+    else 
+    { 
+        bool attending = false; 
+        foreach (var part in @Model.Participations)
+        { 
+            if(part.User.UserId == (int)LoggedInUser) 
+            { 
+                attending = true; 
+            } 
+        } 
+        if(attending) 
+        {
+            <a href="/leave/@Model.ActivityId"><span style="color:orange">LEAVE</span></a>
+        } 
+        else 
+        {
+            <a href="/join/@Model.ActivityId"><span style="color:green">JOIN</span></a>
+        } 
+    } 
+    <a href="/dashboard">List of Activities</a>
+  </div>
+</div>

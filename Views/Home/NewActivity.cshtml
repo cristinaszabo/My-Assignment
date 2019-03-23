@@ -1,0 +1,54 @@
+@using DojoActivity.Models
+@model Activity
+
+<div class="row">
+    <div class="col-8">
+        <h2>Dojo Activity Center</h2>
+    </div>
+    <div class="col-2">
+        <a href="/dashboard">Home</a>
+    </div>
+    <div class="col-2">
+        <a href="/">Logout</a>
+    </div>
+</div>
+<hr>
+<hr>
+<h4>Hey, <span style="color:rgb(218, 68, 180)"> @ViewBag.LoggedInUser.FirstName </span>! Add an Activity:</h4>
+
+<div class="row">
+    <div class="col-8">
+        <form asp-action="AddActivity" asp-controller="Home" method="POST">
+
+            <div class="form-group">
+              <label asp-for="ActivityTitle" class="ml-2"></label>
+              <input asp-for="ActivityTitle" class="form-control" placeholder="Title">
+              <span asp-validation-for="ActivityTitle" style="font-size:small;color:red;" class="ml-2"></span>
+            </div>
+            <div class="form-group">
+              <label asp-for="StartDate" class="ml-2"></label>
+              <input asp-for="StartDate" class="form-control">
+              <span asp-validation-for="StartDate" style="font-size:small;color:red;" class="ml-2"></span>
+            </div>
+            <div class="form-group">
+              <label asp-for="Duration" class="ml-2"></label>
+              <input asp-for="Duration" class="form-control">
+              <span asp-validation-for="Duration" style="font-size:small;color:red;" class="ml-2"></span>
+            </div>
+            <div class="form-group">
+                <select asp-for="TimeMeasure">
+                    <option value="days" selected="selected">Days</option>
+                    <option value="hours">Hours</option>
+                    <option value="minutes">Minutes</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label asp-for="Description" class="ml-2"></label>
+              <textarea asp-for="Description" class="form-control"></textarea>
+              <span asp-validation-for="Description" style="font-size:small;color:red;" class="ml-2"></span>
+            </div>
+            <button type="submit" class="btn btn-outline-dark">CREATE</button>
+        
+        </form>
+    </div>
+</div>

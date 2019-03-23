@@ -1,0 +1,23 @@
+@using DojoActivity.Models
+@model LoginUser
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h5>Have an account? <span style="color:green"><i>Login:</span></i></h5>
+<hr>
+<form asp-action="Login" asp-controller="Home" method="POST">
+    <div class="form-group">
+        <label asp-for="LoginEmail" for="validEmail"><span><b>Email address</b></span></label>
+        <input asp-for="LoginEmail" class="form-control" id="validEmail" placeholder="enter email">
+        <span asp-validation-for="LoginEmail" style="font-size:small;color:red;"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LoginPassword" for="validPassword"><span><b>Password</b></span></label>
+        <input asp-for="LoginPassword" class="form-control" id="validPassword" placeholder="password">
+        <span asp-validation-for="LoginPassword" style="font-size:small;color:red;"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Log In</button>
+</form>
+
